@@ -1,7 +1,7 @@
 #include <iostream>
 #include "profile.h"
 #include <string>
-using namespace std;
+#include <cctype>
 
 Profile::Profile(std::string usrn, std::string dspn){
   username=usrn;
