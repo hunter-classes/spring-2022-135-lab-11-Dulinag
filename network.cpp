@@ -34,15 +34,80 @@ bool Network::addUser(std::string usrn, std::string dspn){
               return false;
           }
         }
+
         Profile pFinal(usrn, dspn);
            profiles[numUsers] = pFinal;
            numUsers++;
-           //The function should return treu
+
            return true;
        }
-       //otherwise do not add the user and return false
+
        else
        {
            return false;
        }
+     }
+
+
+
+
+ bool Network::follow(std::string usrn1, std::string usrn2){
+/*
+ALternate way
+if((findID(usrn1) != -1) && (findID(usrn2) != -1)){
+  int x = findID(usrn1);
+  int y = findID(usrn2);
+  following[x][y] = true;
+
+  return true;
+}
+
+  return false;
+}
+*/
+
+
+    for (int i = 0; i < numUsers; i++){
+
+   if (profiles[i].getUsername().compare(usrn1))
+   {
+
+       for (int jack = 0; jack < numUsers; jack++)
+       {
+
+            if (profiles[jack].getUsername().compare(usrn2))
+           {
+               following[i][jack] = true;
+               return true;
+           }
+         }
+       }
+       }
+       return false;
+     }
+
+
+
+void Network::printDot()
+{
+  std::cout << "digraph {" << std::endl;
+  for (int i = 0; i < numUsers; i++)
+  {
+   std::cout << "\"@" << profiles[i].getUsername() << '*' << std::endl;
+  }
+  std::cout << std::endl;
+
+  for (int v = 0; v < numUsers; v++)
+  {
+   for (int c = 0; c < numUsers; c++)
+   {
+    if (following[v][c] == true)
+    {
+     std::cout << "\"@" << profiles[v].getUsername() << "\" -> \"@" << profiles[c].getUsername() << "\"" << std::endl;
     }
+   }
+  }
+
+  std::cout << std::endl;
+  std::cout << "}";
+}
